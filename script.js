@@ -1,25 +1,17 @@
-// JavaScript code to generate the dropdowns
+import pokemonData from './pokemon_simple.js';
 document.addEventListener("DOMContentLoaded", function () {
-    // Define the Pokémon options
-    const pokemonOptions = ["Bulbasaur", "Charmander", "Squirtle"];
-    
-    // Get the container for dropdowns
-    const container = document.getElementById("dropdown-container");
-    
-    // Create 6 dropdowns
-    for (let i = 1; i <= 6; i++) {
-        // Create a select element
-        const select = document.createElement("select");
-
-        // Add options to the select element
-        pokemonOptions.forEach(pokemon => {
-            const option = document.createElement("option");
-            option.value = pokemon.toLowerCase();
-            option.textContent = pokemon;
-            select.appendChild(option);
-        });
-
-        // Append the select element to the container
-        container.appendChild(select);
+    // Get the dropdown element
+    const dropdown = document.getElementById('pokemon-dropdown');
+    // Loop through the Pokémon data and extract the names
+    for (const key in pokemonData) {
+        if (pokemonData.hasOwnProperty(key)) {
+            const pokemon = pokemonData[key];
+            // Create an option element for each Pokémon
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = pokemon.name;
+            // Add the option to the dropdown
+            dropdown.appendChild(option);
+        }
     }
 });
