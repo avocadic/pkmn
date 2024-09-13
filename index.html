@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokémon Dropdown</title>
+    <title>Pokémon Team Builder</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,11 +14,24 @@
             padding: 10px;
             font-size: 16px;
         }
+        .dropdown-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
-    <h1>Select Your Pokémon</h1>
-    <!-- Dropdown that will be populated with Pokémon names -->
+    <h1>Selection:</h1>
+    <h2>Egg 1</h2>
+    <div class="dropdown-container">
+        <select id="dropdown1"></select>
+        <select id="dropdown2"></select>
+        <select id="dropdown3"></select>
+        <select id="dropdown4"></select>
+        <select id="dropdown5"></select>
+        <select id="dropdown6"></select>
+    </div>
     <select id="pokemon-dropdown"></select>
     <!-- Include script.js as a module -->
     <script type="module" src="script.js"></script>
