@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Create an option element for each Pokémon
             const option = document.createElement('option');
             option.value = key;
-            option.textContent = pokemon.name;
+            option.textContent = pokemon.form_name || pokemon.name;
             // Add the option to the dropdown
             dropdown.appendChild(option);
         }
