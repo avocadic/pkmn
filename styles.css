@@ -10,8 +10,8 @@ body {
 
 .container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
+    align-items: flex-start; /* Align boxes at the top */
     gap: 20px; /* Space between boxes */
 }
 
