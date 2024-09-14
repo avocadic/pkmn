@@ -2,24 +2,57 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Align containers at the top */
-    height: 100vh;
+    flex-direction: column;
+    align-items: center;
     background-color: #f0f0f0;
 }
 
 .title{
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     text-align: center;
-    font-size: 14px;
     color: #333;
 }
 
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     gap: 20px;
-    padding-top: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.box {
+    width: 200px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.image-placeholder.large {
+    width: 128px;
+    height: 128px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+.image-placeholder.large {
+    width: 96px;
+    height: 32px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .type-container {
@@ -28,57 +61,23 @@ body {
     justify-content: center;
     gap: 10px;
     padding: 20px;
-}
-
-.box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 200px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    margin-top: 20px;
 }
 
 .type-box {
+    width: 200px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 200px;
-    padding: 10px;
+    justify-content: space-between;
     border: 1px solid #ccc;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.image-placeholder {
-    background-color: #fff;
-}
-
-.large {
-    width: 128px;
-    height: 128px;
-    margin-bottom: 10px;
-}
-
-.small {
-    width: 96px;
-    height: 32px;
-    margin-bottom: 10px;
 }
 
 .type-text {
     text-align: center;
     font-size: 14px;
     color: #333;
-}
-
-select {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
 }
