@@ -19,8 +19,9 @@ body {
 .container {
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Align boxes at the top */
+    flex-wrap: wrap; /* Align boxes at the top */
     gap: 20px; /* Space between boxes */
+    padding-top: 20px;
 }
 
 .box {
@@ -36,7 +37,6 @@ body {
 
 .image-placeholder {
     background-color: #fff;
-    border: 1px solid #fff;
 }
 
 .large {
