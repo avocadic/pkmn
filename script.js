@@ -1,12 +1,5 @@
 import pokemonData from './pokemon_simple.js';
 
-// List of Pokémon types
-const pokemonTypes = [
-    'normal', 'fire', 'water', 'grass', 'electric', 'ice',
-    'fighting', 'poison', 'ground', 'flying', 'psychic',
-    'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'
-];
-
 // Dropdown menus
 function populateDropdowns() {
     const selects = document.querySelectorAll('select');
@@ -59,27 +52,5 @@ function updateTypes(select, pokemonTypes) {
     });
 }
 
-// Populate the second container with type images and text
-function populateTypeContainer() {
-    const typeContainer = document.querySelector('.type-container');
-    pokemonTypes.forEach(type => {
-        const typeBox = document.createElement('div');
-        typeBox.classList.add('type-box');
-        const imagePlaceholder = document.createElement('div');
-        imagePlaceholder.classList.add('image-placeholder', 'small');
-        imagePlaceholder.style.backgroundImage = `url('img/type/${type}.png')`;
-        const typeText = document.createElement('div');
-        typeText.classList.add('type-text');
-        typeText.textContent = type.charAt(0).toUpperCase() + type.slice(1); // Capitalize type name
-        typeBox.appendChild(imagePlaceholder);
-        typeBox.appendChild(typeText);
-        typeContainer.appendChild(typeBox);
-    });
-}
-
-
 // Call the function to populate the dropdowns once the document is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    populateDropdowns(); // First container functionality
-    populateTypeContainer(); // Second container functionality
-});
+document.addEventListener('DOMContentLoaded', populateDropdowns);
