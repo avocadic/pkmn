@@ -1,11 +1,9 @@
 import pokemonData from './pokemon_simple.js';
-// Function to populate dropdown menus
+
+// Dropdown menus
 function populateDropdowns() {
-    // Get all select elements
     const selects = document.querySelectorAll('select');
-    // Create an array of Pokémon data sorted by base_id
     const sortedPokemon = Object.values(pokemonData).sort((a, b) => a.base_id - b.base_id);
-    // Populate each dropdown
     selects.forEach(select => {
         sortedPokemon.forEach(pokemon => {
             const option = document.createElement('option');
@@ -14,17 +12,18 @@ function populateDropdowns() {
             select.appendChild(option);
         });
     select.addEventListener('change', (event) => {
-            updateImage(select, event.target.value);
-            updateTypes(select, selectedPokemon.pokemon_type);
+        const selectedPokemon = sortedPokemon.find(pokemon => pokemon.base_id == event.target.value);
+        updateImage(select, selectedPokemon);
+        updateTypes(select, selectedPokemon.pokemon_type);
         });
     });
 }
 
-// Function to update the image based on selected dropdown value
-function updateImage(select, baseId) {
-    const baseIdFormatted = baseId.padStart(4, '0');
+// Main image updater
+function updateImage(select, selectedPokemon) {
+    const baseIdFormatted = selectedPokemon.base_id.toString().padStart(4, '0');
     const imagePath = `img/pkmn/${baseIdFormatted}.png`;
-    // Find the box that contains the select
+    // Find the box that contains the selection
     const box = select.closest('.box');
     const imagePlaceholder = box.querySelector('.image-placeholder.large');
     // Set the image source
@@ -33,21 +32,19 @@ function updateImage(select, baseId) {
     imagePlaceholder.style.backgroundPosition = 'center';
 }
 
-// Function to update the type images based on the selected Pokémon's types
+// Type image(s) updater
 function updateTypes(select, pokemonTypes) {
     const box = select.closest('.box');
     const typePlaceholders = box.querySelectorAll('.image-placeholder.small');
-    // Clear existing type images
-    typePlaceholders.forEach(placeholder => {
-        placeholder.style.backgroundImage = '';
-    });
-    // Set type images (up to 2 types)
-    pokemonTypes.forEach((type, index) => {
-        if (typePlaceholders[index]) {
-            const typeImagePath = `img/type/${type}.png`;
-            typePlaceholders[index].style.backgroundImage = `url('${typeImagePath}')`;
-            typePlaceholders[index].style.backgroundSize = 'cover';
-            typePlaceholders[index].style.backgroundPosition = 'center';
+    typePlaceholders.forEach((placeholder, index) => {
+        if (pokemonTypes[index]) {
+            const typeImagePath = `img/type/${pokemonTypes[index]}.png`;
+            placeholder.style.backgroundImage = `url('${typeImagePath}')`;
+            placeholder.style.backgroundSize = 'cover';
+            placeholder.style.backgroundPosition = 'center';
+        } else {
+            // Clear the background if there is no type for this index
+            placeholder.style.backgroundImage = 'none';
         }
     });
 }

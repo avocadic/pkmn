@@ -8,6 +8,13 @@ body {
     background-color: #f0f0f0;
 }
 
+.title-text {
+    margin-top: 20px; /* Space from the top */
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -27,8 +34,8 @@ body {
 }
 
 .image-placeholder {
-    background-color: #ddd;
-    border: 1px solid #ccc;
+    background-color: #fff;
+    border: 1px solid #fff;
 }
 
 .large {
