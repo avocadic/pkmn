@@ -7,12 +7,14 @@ function populateDropdowns() {
     selects.forEach(select => {
         sortedPokemon.forEach(pokemon => {
             const option = document.createElement('option');
-            option.value = pokemon.base_id;
+            // Use both base_id and form_id as value
+            option.value = `${pokemon.base_id}_${pokemon.form_id}`; 
             option.textContent = pokemon.form_name || pokemon.name;
             select.appendChild(option);
         });
     select.addEventListener('change', (event) => {
-        const selectedPokemon = sortedPokemon.find(pokemon => pokemon.base_id == event.target.value);
+        const [baseId, formId] = event.target.value.split('_');
+        const selectedPokemon = sortedPokemon.find(pokemon => pokemon.base_id == baseId && pokemon.form_id == formId);
         updateImage(select, selectedPokemon);
         updateTypes(select, selectedPokemon.pokemon_type);
         });
@@ -22,7 +24,8 @@ function populateDropdowns() {
 // Main image updater
 function updateImage(select, selectedPokemon) {
     const baseIdFormatted = selectedPokemon.base_id.toString().padStart(4, '0');
-    const imagePath = `img/pkmn/${baseIdFormatted}.png`;
+    const formIdFormatted = selectedPokemon.form_id ? `_${selectedPokemon.form_id.toString().padStart(2, '0')}` : '';
+    const imagePath = `img/pkmn/${baseIdFormatted}${formIdFormatted}.png`;
     // Find the box that contains the selection
     const box = select.closest('.box');
     const imagePlaceholder = box.querySelector('.image-placeholder.large');
