@@ -1,19 +1,9 @@
 body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Align containers at the top */
-    height: 100vh;
     background-color: #f0f0f0;
 }
 
-.title-text {
-    margin-top: 20px; /* Space from the top */
+header {
     text-align: center;
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 20px; /* Space from the bottom */
 }
 
 .container {
@@ -30,7 +20,7 @@ body {
     align-items: center;
     width: 200px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #fff;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
