@@ -8,26 +8,39 @@ body {
     background-color: #f0f0f0;
 }
 
-.title-text {
-    margin-top: 20px; /* Space from the top */
-    text-align: center;
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 20px; /* Space from the bottom */
-}
-
 .container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    flex-wrap: wrap; /* Align boxes at the top */
-    gap: 20px; /* Space between boxes */
+    gap: 20px;
     padding-top: 20px;
+}
+
+.type-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
 }
 
 .box {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.type-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 200px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -49,6 +62,12 @@ body {
     width: 96px;
     height: 32px;
     margin-bottom: 10px;
+}
+
+.type-text {
+    text-align: center;
+    font-size: 14px;
+    color: #333;
 }
 
 select {
