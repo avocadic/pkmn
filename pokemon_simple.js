@@ -1,4 +1,11 @@
 export default {
+    "egg": {
+        "base_id": 0,
+        "form_id": 0,
+        "name": "---",
+        "pokemon_type": [ "normal" ],
+        "generation": 1,
+    },
     "bulbasaur": {
         "base_id": 1,
         "form_id": 0,
