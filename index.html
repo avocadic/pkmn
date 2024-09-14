@@ -3,60 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokémon Team Builder</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        select {
-            margin: 10px;
-            padding: 10px;
-            font-size: 16px;
-        }
-        .dropdown-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .info {
-            margin-top: 5px;
-            font-size: 14px;
-            color: #555;
-        }
-    </style>
+    <title>Rectangular Boxes</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Pokémon Team Builder</h1>
-    <h2>Egg 3</h2>
-    <div class="dropdown-container">
-        <div>
-            <select id="dropdown1"></select>
-            <div class="info" id="info1"></div>
+    <div class="container">
+        <div class="box">
+            <div class="image-placeholder large"></div>
+            <div class="image-placeholder small"></div>
+            <div class="image-placeholder small"></div>
+            <select>
+                <option value="">Select an option</option>
+                <!-- Add more options here -->
+            </select>
         </div>
-        <div>
-            <select id="dropdown2"></select>
-            <div class="info" id="info2"></div>
-        </div>
-        <div>
-            <select id="dropdown3"></select>
-            <div class="info" id="info3"></div>
-        </div>
-        <div>
-            <select id="dropdown4"></select>
-            <div class="info" id="info4"></div>
-        </div>
-        <div>
-            <select id="dropdown5"></select>
-            <div class="info" id="info5"></div>
-        </div>
-        <div>
-            <select id="dropdown6"></select>
-            <div class="info" id="info6"></div>
-        </div>
+        <!-- Repeat the .box div as needed -->
     </div>
-    <!-- Include script.js as a module ee -->
-    <script type="module" src="script.js"></script>
-    <h1>Analysis:</h1>
 </body>
 </html>
