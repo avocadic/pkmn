@@ -2,8 +2,8 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
     background-color: #f0f0f0;
 }
 
@@ -12,39 +12,42 @@ body {
     margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
-    color: #ff0000;
+    color: #27e071;
 }
 
 .container {
-    gap: 20px;
-    padding: 20px;
     display: flex;
     justify-content: center;
+    gap: 20px;
+    padding: 20px;
 }
 
 .box {
-    width: 200px;
-    height: 300px;
-    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    width: 200px;
+    padding: 10px;
     border: 1px solid #ccc;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.image-placeholder.large {
-    width: 128px;
-    height: 128px;
-    background-color: #fff;
+.image-placeholder {
+    background-color: #ddd;
+    border: 1px solid #ccc;
 }
 
-.image-placeholder.large {
+.large {
+    width: 128px;
+    height: 128px;
+    margin-bottom: 10px;
+}
+
+.small {
     width: 96px;
     height: 32px;
-    background-color: #fff;
+    margin-bottom: 10px;
 }
 
 select {
@@ -55,21 +58,18 @@ select {
 }
 
 .type-container {
-    gap: 10px;
-    padding: 20px;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
+    gap: 20px;
+    padding: 20px;
 }
 
 .type-box {
-    width: 200px;
-    height: 300px;
-    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    width: 200px;
+    padding: 10px;
     border: 1px solid #ccc;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
