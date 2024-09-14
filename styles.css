@@ -3,7 +3,7 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Align containers at the top */
     height: 100vh;
     background-color: #f0f0f0;
 }
