@@ -15,6 +15,7 @@ function populateDropdowns() {
         });
     select.addEventListener('change', (event) => {
             updateImage(select, event.target.value);
+            updateTypes(select, selectedPokemon.pokemon_type);
         });
     });
 }
@@ -30,6 +31,25 @@ function updateImage(select, baseId) {
     imagePlaceholder.style.backgroundImage = `url('${imagePath}')`;
     imagePlaceholder.style.backgroundSize = 'cover';
     imagePlaceholder.style.backgroundPosition = 'center';
+}
+
+// Function to update the type images based on the selected Pokémon's types
+function updateTypes(select, pokemonTypes) {
+    const box = select.closest('.box');
+    const typePlaceholders = box.querySelectorAll('.image-placeholder.small');
+    // Clear existing type images
+    typePlaceholders.forEach(placeholder => {
+        placeholder.style.backgroundImage = '';
+    });
+    // Set type images (up to 2 types)
+    pokemonTypes.forEach((type, index) => {
+        if (typePlaceholders[index]) {
+            const typeImagePath = `img/type/${type}.png`;
+            typePlaceholders[index].style.backgroundImage = `url('${typeImagePath}')`;
+            typePlaceholders[index].style.backgroundSize = 'cover';
+            typePlaceholders[index].style.backgroundPosition = 'center';
+        }
+    });
 }
 
 // Call the function to populate the dropdowns once the document is loaded
