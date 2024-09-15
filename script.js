@@ -1,4 +1,4 @@
-import pokemonData from './pokemon_filtered.js';
+import pokemonData from './pokemon.js';
 import typeData from './type.js';
 
 // Track current selections
@@ -59,6 +59,7 @@ function randomSelections() {
     updateTallies(); // Update tallies after random selections
 }
 
+// Button calls
 document.getElementById('reset').addEventListener('click', resetSelections);
 document.getElementById('random').addEventListener('click', randomSelections);
 
@@ -98,6 +99,8 @@ function updateTallies() {
         tally.style.color = ''; // Reset color
     });
     let tallyMap = {};
+    let totalScore = 0;
+    let weightedScore = 0;
     currentSelections.forEach(selection => {
         if (selection) {
             const { pokemon_type } = selection;
@@ -147,20 +150,35 @@ function updateTallies() {
         const tally = document.querySelector(`.tally img[src$="${type}.png"]`).nextElementSibling;
         const tallyValue = tallyMap[type] || 0;
         tally.textContent = tallyValue;
+        totalScore += tallyValue;
+        let weightedValue = 0;
+        if (tallyValue > 3) {
+            weightedValue = 3; // Cap
+        } else if (tallyValue >= 0 && tallyValue <= 3) {
+            weightedValue = tallyValue; // Same value as tally
+        } else {
+            // Calculate triangular number for negative tally values
+            const absValue = Math.abs(tallyValue);
+            weightedValue = -(absValue * (absValue + 1));
+        }
+        weightedScore += weightedValue;
         if (tallyValue >= 3) {
-            tally.style.color = '#00af00';
+            tally.style.color = '#0C0';
         } else if (tallyValue === 2) {
-            tally.style.color = '#007d00';
+            tally.style.color = '#090';
         } else if (tallyValue === 1) {
-            tally.style.color = '#004b00';
+            tally.style.color = '#060';
         } else if (tallyValue <= -3) {
-            tally.style.color = '#e10000';
+            tally.style.color = '#C00';
         } else if (tallyValue === -2) {
-            tally.style.color = '#af0000';
+            tally.style.color = '#900';
         } else if (tallyValue === -1) {
-            tally.style.color = '#7d0000';
+            tally.style.color = '#600';
         }
     });
+    document.querySelector('.score p.inline').textContent = `Total score: ${totalScore}`;
+    const weightedScoreElement = document.querySelectorAll('.score p.inline')[1];
+    weightedScoreElement.textContent = `Weighted score: ${weightedScore}`;
 }
 
 // Call the function to populate the dropdowns once the document is loaded

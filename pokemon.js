@@ -6643,7 +6643,7 @@ export default {
     },
     "zygarde-10": {
         "base_id": 718,
-        "form_id": 2,
+        "form_id": 1,
         "name": "Zygarde",
         "form_name": "Zygarde-10%",
         "pokemon_type": [ "dragon", "ground" ],
