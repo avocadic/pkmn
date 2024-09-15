@@ -3,7 +3,7 @@ export default {
         "base_id": 0,
         "form_id": 0,
         "name": "---",
-        "pokemon_type": [ "normal" ],
+        "pokemon_type": [ "null" ],
         "generation": 1,
     },
     "bulbasaur": {
