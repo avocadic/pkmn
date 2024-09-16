@@ -192,12 +192,23 @@ function updateTallies() {
 // Combo calcing
 
 // Function to calculate and log weighted scores for each combination
-function calculateCombinations() {
+function calculateCombinations(excludeUsedTypes = False) {
     const currentTallyMap = getCurrentTallyMap();  // Get current tally state
     const scores = [];
+    let usedTypes = new Set();
+    if (excludeUsedTypes) {
+        currentSelections.forEach(selection => {
+            if (selection) {
+                selection.pokemon_type.forEach(type => usedTypes.add(type));
+            }
+        });
+    }
     comboData.forEach(combo => {
         const tempTallyMap = { ...currentTallyMap };  // Clone the current tally state
         const { pokemon_type, combo_id } = combo;
+        if (excludeUsedTypes && pokemon_type.some(type => usedTypes.has(type))) {
+            return;  // Skip this combo as it uses a type already in use
+        }
         let immune2 = new Set();
         let resist2 = new Set();
         let weak2 = new Set();
@@ -336,7 +347,8 @@ function getCurrentTallyMap() {
 }
 
 // Button call to calculate the next combo
-document.getElementById('combocalc').addEventListener('click', calculateCombinations);
+document.getElementById('combocalc').addEventListener('click', () => calculateCombinations(false));
+document.getElementById('combocalc-ex').addEventListener('click', () => calculateCombinations(true));
 
 // Call the function to populate the dropdowns once the document is loaded
 document.addEventListener('DOMContentLoaded', populateDropdowns);
