@@ -50,6 +50,17 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+.scorebox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+    padding: 5px;
+    border: 1px solid #fff;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
 .score {
     display: flex;
     flex-direction: column;
@@ -82,20 +93,4 @@ select {
     border: 1px solid #ccc;
     margin-top: 10px;
     border-radius: 4px;
-}
-
-.combo-box {
-    display: inline-block;
-    margin: 10px;
-    text-align: center;
-}
-.combo-box img {
-    width: 50px;
-    height: 50px;
-    display: block;
-    margin: 0 auto;
-}
-.combo-box p {
-    margin: 5px 0 0;
-    font-size: 14px;
 }

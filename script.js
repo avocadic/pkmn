@@ -1,5 +1,6 @@
 import pokemonData from './pokemon.js';
 import typeData from './type.js';
+import comboData from './combo.js';
 
 // Track current selections
 let currentSelections = Array.from({ length: 6 }, () => null);
@@ -39,6 +40,13 @@ function resetSelections() {
     });
     currentSelections = Array.from({ length: 6 }, () => null);
     updateTallies(); // Reset tallies
+    const scoreboxes = document.querySelectorAll('.scorebox');
+    scoreboxes.forEach(scorebox => {
+        const scoreElement = scorebox.querySelector('p.inline');
+        if (scoreElement) {
+            scoreElement.textContent = '0';
+        }
+    });
 }
 
 // Randomly select options in all dropdowns
@@ -136,7 +144,7 @@ function updateTallies() {
                 }
             });
             // Accumulate tally values
-            immune2.forEach(t => tallyMap[t] = (tallyMap[t] || 0) + 3);
+            immune2.forEach(t => tallyMap[t] = (tallyMap[t] || 0) + 2);
             resist4.forEach(t => tallyMap[t] = (tallyMap[t] || 0) + 2);
             resist2.forEach(t => tallyMap[t] = (tallyMap[t] || 0) + 1);
             weak2.forEach(t => tallyMap[t] = (tallyMap[t] || 0) - 1);
@@ -180,6 +188,155 @@ function updateTallies() {
     const weightedScoreElement = document.querySelectorAll('.score p.inline')[1];
     weightedScoreElement.textContent = `Weighted score: ${weightedScore}`;
 }
+
+// Combo calcing
+
+// Function to calculate and log weighted scores for each combination
+function calculateCombinations() {
+    const currentTallyMap = getCurrentTallyMap();  // Get current tally state
+    const scores = [];
+    comboData.forEach(combo => {
+        const tempTallyMap = { ...currentTallyMap };  // Clone the current tally state
+        const { pokemon_type, combo_id } = combo;
+        let immune2 = new Set();
+        let resist2 = new Set();
+        let weak2 = new Set();
+        let resist4 = new Set();
+        let weak4 = new Set();
+        // Process the pokemon_type of the combo
+        pokemon_type.forEach(type => {
+            const typeInfo = typeData[0].type_data[type];
+            if (typeInfo.immune2) {
+                typeInfo.immune2.forEach(t => immune2.add(t));
+            }
+            if (typeInfo.resists) {
+                typeInfo.resists.forEach(t => resist2.has(t) ? resist4.add(t) : resist2.add(t));
+            }
+            if (typeInfo.weak2) {
+                typeInfo.weak2.forEach(t => weak2.has(t) ? weak4.add(t) : weak2.add(t));
+            }
+        });
+
+        // Remove resist2/weak2 that are now counted in resist4/weak4
+        resist4.forEach(t => resist2.delete(t));
+        weak4.forEach(t => weak2.delete(t));
+        // Remove weak2/resist2 types that are also in immune2
+        immune2.forEach(t => weak2.delete(t));
+        immune2.forEach(t => resist2.delete(t));
+        // Remove types that are in both resist2 and weak2
+        resist2.forEach(t => {
+            if (weak2.has(t)) {
+                resist2.delete(t);
+                weak2.delete(t);
+            }
+        });
+
+        // Accumulate temporary tally values for the combo
+        immune2.forEach(t => tempTallyMap[t] = (tempTallyMap[t] || 0) + 2);
+        resist4.forEach(t => tempTallyMap[t] = (tempTallyMap[t] || 0) + 2);
+        resist2.forEach(t => tempTallyMap[t] = (tempTallyMap[t] || 0) + 1);
+        weak2.forEach(t => tempTallyMap[t] = (tempTallyMap[t] || 0) - 1);
+        weak4.forEach(t => tempTallyMap[t] = (tempTallyMap[t] || 0) - 2);
+
+        // Calculate the theoretical weighted score
+        let totalScore = 0;
+        let weightedScore = 0;
+        for (let tallyValue of Object.values(tempTallyMap)) {
+            totalScore += tallyValue;
+            let weightedValue = 0;
+            if (tallyValue > 3) {
+                weightedValue = 3; // Cap at 3
+            } else if (tallyValue >= 0 && tallyValue <= 3) {
+                weightedValue = tallyValue; // Same value as tally
+            } else {
+                // Calculate triangular number for negative tally values
+                const absValue = Math.abs(tallyValue);
+                weightedValue = -(absValue * (absValue + 1));
+            }
+            weightedScore += weightedValue;
+        }
+        scores.push({ combo_id, weightedScore });
+        // Print the combo_id and its corresponding weighted score
+        // console.log(`Combo ID: ${combo_id}, Weighted Score: ${weightedScore}`);
+    });
+    // Sort scores from largest to smallest and get the top 10
+    scores.sort((a, b) => b.weightedScore - a.weightedScore);
+    const top10Scores = scores.slice(0, 10);
+    // Display top 10 scores in the scoreboxes
+    const scoreboxes = document.querySelectorAll('.scorebox');
+    top10Scores.forEach((score, index) => {
+        if (index < scoreboxes.length) {
+            const scorebox = scoreboxes[index];
+            const imagePlaceholders = scorebox.querySelectorAll('.image-placeholder.small');
+            // Assuming combo_id can be used to fetch an image or relevant details
+            const combo = comboData.find(combo => combo.combo_id === score.combo_id);
+            const types = combo.pokemon_type;
+            imagePlaceholders.forEach((placeholder, i) => {
+                if (types[i]) {
+                    const typeImagePath = `img/type/${types[i]}.png`;
+                    placeholder.style.backgroundImage = `url('${typeImagePath}')`;
+                    placeholder.style.backgroundSize = 'cover';
+                    placeholder.style.backgroundPosition = 'center';
+                } else {
+                    // Clear the placeholder if no type is available for that slot
+                    placeholder.style.backgroundImage = 'none';
+                }
+            });
+            const scoreElement = scorebox.querySelector('p.inline');
+            scoreElement.textContent = score.weightedScore;
+        }
+    });
+}
+
+// Helper function to get the current tally map
+function getCurrentTallyMap() {
+    let tallyMap = {};
+    currentSelections.forEach(selection => {
+        if (selection) {
+            const { pokemon_type } = selection;
+            let immune2 = new Set();
+            let resist2 = new Set();
+            let weak2 = new Set();
+            let resist4 = new Set();
+            let weak4 = new Set();
+            pokemon_type.forEach(type => {
+                const typeInfo = typeData[0].type_data[type];
+                if (typeInfo.immune2) {
+                    typeInfo.immune2.forEach(t => immune2.add(t));
+                }
+                if (typeInfo.resists) {
+                    typeInfo.resists.forEach(t => resist2.has(t) ? resist4.add(t) : resist2.add(t));
+                }
+                if (typeInfo.weak2) {
+                    typeInfo.weak2.forEach(t => weak2.has(t) ? weak4.add(t) : weak2.add(t));
+                }
+            });
+            // Remove resist2/weak2 that are now counted in resist4/weak4
+            resist4.forEach(t => resist2.delete(t));
+            weak4.forEach(t => weak2.delete(t));
+            // Remove weak2/resist2 types that are also in immune2
+            immune2.forEach(t => weak2.delete(t));
+            immune2.forEach(t => resist2.delete(t));
+            // Remove types that are in both resist2 and weak2
+            resist2.forEach(t => {
+                if (weak2.has(t)) {
+                    resist2.delete(t);
+                    weak2.delete(t);
+                }
+            });
+            // Accumulate tally values
+            immune2.forEach(t => tallyMap[t] = (tallyMap[t] || 0) + 2);
+            resist4.forEach(t => tallyMap[t] = (tallyMap[t] || 0) + 2);
+            resist2.forEach(t => tallyMap[t] = (tallyMap[t] || 0) + 1);
+            weak2.forEach(t => tallyMap[t] = (tallyMap[t] || 0) - 1);
+            weak4.forEach(t => tallyMap[t] = (tallyMap[t] || 0) - 2);
+        }
+    });
+    return tallyMap;
+}
+
+// Button call to calculate the next combo
+document.getElementById('combocalc').addEventListener('click', calculateCombinations);
 
 // Call the function to populate the dropdowns once the document is loaded
 document.addEventListener('DOMContentLoaded', populateDropdowns);
